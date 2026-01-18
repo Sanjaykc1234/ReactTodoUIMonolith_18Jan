@@ -1,0 +1,18 @@
+trigger: none
+pool: Vinod_Linux
+
+stages:
+  - stage: scanlint
+    displayName: scanlinting
+    jobs:
+      - job : scan
+        displayName: scanning
+        steps:
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: |
+                npm install -g retire
+                npm install
+                retire --exitwith code 0
+                
