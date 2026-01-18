@@ -8,11 +8,15 @@ stages:
       - job : scan
         displayName: scanning
         steps:
+          - task: Gitleaks@3
+            inputs:
+              scanlocation: '$(Build.SourcesDirectory)'
+              configtype: 'default'
+              reportformat: 'csv'
           - task: Bash@3
             inputs:
               targetType: 'inline'
               script: |
                 npm install -g retire
                 npm install
-                retire --exitwith code 0
-                
+                retire --exitwith code 1
